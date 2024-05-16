@@ -7,7 +7,7 @@
 </script>
 
 <div class="w-full h-full flex flex-col justify-between items-end gap-4">
-	<p class="text-2xl font-semibold text-center">
+	<p class="text-3xl font-semibold text-center">
 		{enToKo[$selectedType]} 장착 아이템
 	</p>
 	<div class="w-full h-14 bg-custom-secondary rounded-md pl-4 flex items-center gap-4">
@@ -24,7 +24,7 @@
 	</div>
 	<div class="w-full flex gap-4">
 		<button 
-        disabled={$dodo[$selectedType][0] === 'null' || $dodo[$selectedType][0] === '1040036' || $selectedType === 'Face' || $selectedType === 'Hair'}
+        disabled={$dodo[$selectedType][0] === 'null' || $dodo[$selectedType][0] === '1040036' || $selectedType === 'Face' || $selectedType === 'Hair' || $selectedType === 'Head'}
         class="flex-grow btn bg-custom-secondary text-black hover:bg-white rounded-lg text-base disabled:invisible"
         on:click={() => {
         dodo.setCharacter({ id: 'null', name: 'null', type: $selectedType });

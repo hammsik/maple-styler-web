@@ -7,7 +7,20 @@ function currentBackgrond() {
 		subscribe,
 		setBackground: (item) => set(item)
 	};
+}
 
+function currentColor() {
+	const { subscribe, set, update } = writable([0, 0]);
+	return {
+		subscribe,
+		updateColor: (colorInput, idx) =>{
+			console.log(colorInput, idx)
+			update((color) => {
+				color[idx] = colorInput;
+				return color;
+			})
+		}
+	};
 }
 
 function createSelectedType() {
@@ -122,3 +135,4 @@ function makeItemsUrl(itemMap) {
 export const dodo = createCharacter();
 export const selectedType = createSelectedType();
 export const currentBackground = currentBackgrond();
+export const currentBeautyColor = currentColor();
