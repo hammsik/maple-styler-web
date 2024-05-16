@@ -75,11 +75,17 @@ function createCharacter() {
 					} else {
 						itemMap[item.type] = ['null', 'null'];
 					}
-				} else {
-					// console.log(item.type, item.id, item.name, itemMap[item.type]);
+				} else if (item.type === 'Overall') {
+					itemMap['Top'] = ['1040036', '상의 이너'];
+					itemMap['Bottom'] = ['1060026', '하의 이너'];
 					itemMap[item.type] = [item.id, item.name];
-					// console.log(itemMap);
+				} else if (item.type === 'Top' || item.type === 'Bottom') {
+					itemMap['Overall'] = ['null', 'null'];
+					itemMap[item.type] = [item.id, item.name];
+				} else {
+					itemMap[item.type] = [item.id, item.name];
 				}
+				
 				return itemMap;
 			})
 	};
