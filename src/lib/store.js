@@ -13,12 +13,12 @@ function currentColor() {
 	const { subscribe, set, update } = writable([0, 0]);
 	return {
 		subscribe,
-		updateColor: (colorInput, idx) =>{
-			console.log(colorInput, idx)
+		updateColor: (colorInput, idx) => {
+			console.log(colorInput, idx);
 			update((color) => {
 				color[idx] = colorInput;
 				return color;
-			})
+			});
 		}
 	};
 }
@@ -85,7 +85,19 @@ function createCharacter() {
 				} else {
 					itemMap[item.type] = [item.id, item.name];
 				}
-				
+
+				return itemMap;
+			}),
+		setBeauty: (color, type) =>
+			update((itemMap) => {
+				itemMap[type][2] = color;
+				if (type === 'Hair') {
+					const item = itemMap['Hair'][0];
+					itemMap['Hair'][0] = item.substring(0, 4) + color + item.substring(5);
+				} else {
+					const item = itemMap['Face'][0];
+					itemMap['Face'][0] = item.substring(0, 2) + color + item.substring(3);
+				}
 				return itemMap;
 			})
 	};

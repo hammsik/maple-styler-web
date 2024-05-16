@@ -2,7 +2,7 @@
 	// @ts-nocheck
 
 	import { hairColor, lensColor } from '$lib/data';
-	import { currentBeautyColor } from '$lib/store';
+	import { currentBeautyColor, dodo } from '$lib/store';
 
 	let currentColorType = 'hair';
 </script>
@@ -30,8 +30,10 @@
 					on:click={() => {
 						if (currentColorType === 'hair') {
 							currentBeautyColor.updateColor(color[1], 0);
+							dodo.setBeauty(color[1], 'Hair')
 						} else {
 							currentBeautyColor.updateColor(color[1], 1);
+							dodo.setBeauty(color[1], 'Lens')
 						}
 					}}
 				>
