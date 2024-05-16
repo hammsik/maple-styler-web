@@ -1,6 +1,15 @@
 // @ts-nocheck
 import { writable } from 'svelte/store';
 
+function currentBackgrond() {
+	const { subscribe, set, update } = writable('null');
+	return {
+		subscribe,
+		setBackground: (item) => set(item)
+	};
+
+}
+
 function createSelectedType() {
 	const { subscribe, set, update } = writable('Hair');
 	return {
@@ -112,3 +121,4 @@ function makeItemsUrl(itemMap) {
 
 export const dodo = createCharacter();
 export const selectedType = createSelectedType();
+export const currentBackground = currentBackgrond();
