@@ -2,7 +2,7 @@
 	import heart from '$lib/assets/heart.svg';
 </script>
 
-<section class="w-1/2 h-full flex flex-col gap-3">
+<section class="w-2/3 h-full flex flex-col gap-3">
 	<figure class="w-full h-full flex flex-col items-end gap-2">
 		<div class="flex justify-center items-center gap-2">
 			<img src={heart} alt="heart" />

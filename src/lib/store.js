@@ -1,67 +1,64 @@
 // @ts-nocheck
 import { writable } from 'svelte/store';
 
+function createSelectedItem() {
+	const { subscribe, set, update } = writable({
+		id: 'null',
+		name: 'null',
+		type: 'null'
+	});
+
+	return {
+		subscribe,
+		setSelectedItem: (item) =>
+			set({
+				id: item.id,
+				name: item.name,
+				type: item.type
+			})
+	};
+}
+
 function createCharacter() {
 	const { subscribe, set, update } = writable({
 		// itemMap: {
-			//뷰티
-			Hair: ['68090', '허쉬 헤어', '0'],
-			Face: ['50137', '차차 얼굴', '0'],
-			Head: ['12016', '홍조 꽃잎 피부'],
-			Body: ['2016', 'null'],
-			//장비
-			Hat: ['null', 'null'],
-			Overall: ['null', 'null'],
-			Cash: ['1702565', 'null'],
-			Top: ['1040036', '상의 이너'],
-			Bottom: ['1060026', '하의 이너'],
-			Cape: ['1103126', 'null'],
-			Glove: ['null', 'null'],
-			Shoes: ['null', 'null'],
-			Shield: ['null', 'null'],
-			//악세
-			'Face Accessory': ['null', 'null'],
-			'Eye Decoration': ['null', 'null'],
-			Earrings: ['null', 'null']
-		// },
-		// // itemMap을 json으로 encode하여 itemQueue에 저장해야 한다.
+		//뷰티
+		Hair: ['68090', '허쉬 헤어', '0'],
+		Face: ['50137', '차차 얼굴', '0'],
+		Head: ['12016', '홍조 꽃잎 피부'],
+		Body: ['2016', 'null'],
+		//장비
+		Hat: ['null', 'null'],
+		Overall: ['null', 'null'],
+		Cash: ['1702565', 'null'],
+		Top: ['1040036', '상의 이너'],
+		Bottom: ['1060026', '하의 이너'],
+		Cape: ['1103126', 'null'],
+		Glove: ['null', 'null'],
+		Shoes: ['null', 'null'],
+		Shield: ['null', 'null'],
+		//악세
+		'Face Accessory': ['null', 'null'],
+		'Eye Decoration': ['null', 'null'],
+		Earrings: ['null', 'null']
+
 		// itemQueue: [],
 		// itemQueueIndex: 0
 	});
 
 	return {
 		subscribe,
-        getCharacter: (itemMap) => {
-            const itemsUrl = makeItemsUrl(itemMap);
-            return `https://maplestory.io/api/Character/${itemsUrl}/stand1/0/?renderMode=2`;
-        },
-		update,
-		reset: () =>
-			set({
-				itemMap: {
-					//뷰티
-					Hair: ['68090', '허쉬 헤어', '0'],
-					Face: ['50137', '차차 얼굴', '0'],
-					Head: ['12016', '홍조 꽃잎 피부'],
-					Body: ['2016', 'null'],
-					//장비
-					Hat: ['null', 'null'],
-					Overall: ['null', 'null'],
-					Cash: ['null', 'null'],
-					Top: ['1040036', '상의 이너'],
-					Bottom: ['1060026', '하의 이너'],
-					Cape: ['null', 'null'],
-					Glove: ['null', 'null'],
-					Shoes: ['null', 'null'],
-					Shield: ['null', 'null'],
-					//악세
-					'Face Accessory': ['null', 'null'],
-					'Eye Decoration': ['null', 'null'],
-					Earrings: ['null', 'null']
-				},
-				// itemMap을 json으로 encode하여 itemQueue에 저장해야 한다.
-				itemQueue: [],
-				itemQueueIndex: 0
+		getCharacter: (itemMap) => {
+			const itemsUrl = makeItemsUrl(itemMap);
+			console.log(itemsUrl);
+			return `https://maplestory.io/api/Character/${itemsUrl}/stand1/0/?renderMode=2`;
+		},
+		setCharacter: (item) =>
+			update((itemMap) => {
+				console.log(item.type, item.id, item.name, itemMap[item.type]);
+				itemMap[item.type] = [item.id, item.name];
+				console.log(itemMap);
+				return itemMap;
 			})
 	};
 }
@@ -114,3 +111,4 @@ function makeItemsUrl(itemMap) {
 }
 
 export const dodo = createCharacter();
+export const selectedItem = createSelectedItem();

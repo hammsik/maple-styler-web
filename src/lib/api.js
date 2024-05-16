@@ -7,7 +7,7 @@ const subCategory = [
 	['Face Accessory', 'Eye Decoration', 'Earrings']
 ];
 
-async function getItemList() {
+export async function getItemList() {
 	let itemList = [];
 	for (let i = 0; i < category.length; i++) {
 		let categoryList = [];
@@ -25,19 +25,29 @@ async function getItemList() {
 			const text = await response.text();
 			try {
 				const item = JSON.parse(text);
-				console.log(item.length);
+				// console.log(item.length);
 				let subCategoryList = [];
-				for (let k = 0; k < item.length; k++) {
+				for (let k = item.length - 1; k >= 0; k--) {
 					// 검은색을 제외한 성형, 헤어 data 제거
-                    if (subCategory[i][j] === 'Face' && item[k].id % 1000 >= 100) continue;
-                    if (subCategory[i][j] === 'Hair' && item[k].id % 10 !== 0) continue;
+					if (subCategory[i][j] === 'Face' && item[k].id % 1000 >= 100) continue;
+					if (subCategory[i][j] === 'Hair') {
+						if (item[k].id % 10 === 0) {
+                            subCategoryList.push({
+                                id: item[k].id,
+                                name: item[k].name.substr(4),
+                                type: item[k].typeInfo.subCategory
+                            });
+                            continue;
+						} else {
+							continue;
+						}
+					}
 					subCategoryList.push({
 						id: item[k].id,
 						name: item[k].name,
 						type: item[k].typeInfo.subCategory
 					});
 				}
-                console.log(item.length, subCategoryList.length, subCategory[i][j], subCategoryList[0]);
 				categoryList.push({ name: subCategory[i][j], list: subCategoryList });
 			} catch (error) {
 				console.error(
@@ -48,9 +58,8 @@ async function getItemList() {
 		itemList.push({ name: category[i], list: categoryList });
 	}
 	console.log('fetching item list completed:');
-	// console.log(itemList[0], itemList[1], itemList[2]);
-}
 
-export function load() {
-	getItemList();
+	console.log('받아온 아이템 리스트:', itemList);
+
+	return itemList;
 }
