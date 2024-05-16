@@ -2,12 +2,11 @@
 	import { onMount } from 'svelte';
 	import { dodo } from '$lib/store';
 
+	let isLoading = false;
+
 	onMount(() => {
 		console.log('CharacterBoard mounted');
-		// dodo.getCharacter($dodo);
 	});
-
-	async function urlSetting() {}
 </script>
 
 <figure

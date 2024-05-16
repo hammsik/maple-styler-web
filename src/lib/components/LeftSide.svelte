@@ -2,6 +2,7 @@
 	import { getItemList } from '$lib/api';
 	import { toolData } from '$lib/data';
 	import { dodo, selectedType } from '$lib/store';
+	import arrow from '$lib/assets/arrow.svg';
 
 	let itemList = getItemList().then((res) => {
 		return res;
@@ -37,7 +38,7 @@
 	<figure class="w-full flex gap-2.5 text-lg">
 		{#each toolData as category, idx}
 			<button
-				class={`flex-grow h-full btn text-xl ${currentCategoryIdx === idx ? 'bg-custom-selected text-white' : 'bg-custom-secondary'} text-black p-0 hover:bg-white rounded-lg font-semibold`}
+				class={`flex-grow h-full btn text-xl ${currentCategoryIdx === idx ? 'bg-custom-selected text-white hover:bg-custom-selected' : 'bg-custom-secondary'} text-black p-0 hover:bg-white rounded-lg font-semibold`}
 				on:click={() => {
 					currentCategoryIdx = idx;
 					currentSubCategoryIdx = 0;
@@ -51,14 +52,14 @@
 			</button>
 		{/each}
 	</figure>
-	<details class="dropdown bg-custom-secondary rounded-xl">
-		<summary
-			tabindex="0"
-			role="button"
-			class="btn bg-transparent w-full hover:bg-white text-black text-xl border-0"
-		>
-			{toolData[currentCategoryIdx].list[currentSubCategoryIdx][0]}
-		</summary>
+	<div class="dropdown bg-custom-secondary rounded-xl">
+		<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+		<div tabindex="0" class="btn bg-transparent w-full hover:bg-white text-black text-xl border-0">
+			<div class="w-full flex items-center gap-2">
+				<p class="text-left text-xl text-bold">{toolData[currentCategoryIdx].list[currentSubCategoryIdx][0]}</p>
+				<img src={arrow} alt="arrow" class="w-8 h-8" />
+			</div>
+		</div>
 		<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 		<div tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box">
 			{#each toolData[currentCategoryIdx].list as subCategory, idx}
@@ -68,13 +69,13 @@
 						currentSubCategoryIdx = idx;
 						searchKeyword = '';
 						filterKeyword = '';
-						console.log(subCategory[1])
+						console.log(subCategory[1]);
 						selectedType.setSelectedType(subCategory[1]);
 					}}>{subCategory[0]}</button
 				>
 			{/each}
 		</div>
-	</details>
+	</div>
 	<figure
 		class="w-full h-[540px] grid grid-cols-2 bg-custom-secondary rounded-xl gap-4 overflow-y-auto p-2"
 	>

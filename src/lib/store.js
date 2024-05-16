@@ -2,11 +2,10 @@
 import { writable } from 'svelte/store';
 
 function createSelectedType() {
-	const { subscribe, set, update } = writable("Hair");
+	const { subscribe, set, update } = writable('Hair');
 	return {
 		subscribe,
-		setSelectedType: (item) =>
-			set(item)
+		setSelectedType: (item) => set(item)
 	};
 }
 
@@ -46,9 +45,19 @@ function createCharacter() {
 		},
 		setCharacter: (item) =>
 			update((itemMap) => {
-				console.log(item.type, item.id, item.name, itemMap[item.type]);
-				itemMap[item.type] = [item.id, item.name];
-				console.log(itemMap);
+				if (item.id === 'null') {
+					if (item.type === 'Top') {
+						itemMap['Top'] = ['1040036', '상의 이너'];
+					} else if (item.type === 'Bottom') {
+						itemMap['Bottom'] = ['1060026', '하의 이너'];
+					} else {
+						itemMap[item.type] = ['null', 'null'];
+					}
+				} else {
+					// console.log(item.type, item.id, item.name, itemMap[item.type]);
+					itemMap[item.type] = [item.id, item.name];
+					// console.log(itemMap);
+				}
 				return itemMap;
 			})
 	};
