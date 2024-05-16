@@ -1,21 +1,12 @@
 // @ts-nocheck
 import { writable } from 'svelte/store';
 
-function createSelectedItem() {
-	const { subscribe, set, update } = writable({
-		id: 'null',
-		name: 'null',
-		type: 'null'
-	});
-
+function createSelectedType() {
+	const { subscribe, set, update } = writable("Hair");
 	return {
 		subscribe,
-		setSelectedItem: (item) =>
-			set({
-				id: item.id,
-				name: item.name,
-				type: item.type
-			})
+		setSelectedType: (item) =>
+			set(item)
 	};
 }
 
@@ -111,4 +102,4 @@ function makeItemsUrl(itemMap) {
 }
 
 export const dodo = createCharacter();
-export const selectedItem = createSelectedItem();
+export const selectedType = createSelectedType();

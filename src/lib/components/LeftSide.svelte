@@ -1,7 +1,7 @@
 <script>
 	import { getItemList } from '$lib/api';
 	import { toolData } from '$lib/data';
-	import { dodo, selectedItem} from '$lib/store';
+	import { dodo, selectedType } from '$lib/store';
 
 	let itemList = getItemList().then((res) => {
 		return res;
@@ -22,7 +22,7 @@
 		<input
 			type="text"
 			class="grow"
-			placeholder="아이템 검색"
+			placeholder="카테고리에 해당하는 아이템을 검색하세요"
 			bind:value={searchKeyword}
 			on:change={(e) => onSearchItem(e)}
 		/>
@@ -37,18 +37,26 @@
 	<figure class="w-full flex gap-2.5 text-lg">
 		{#each toolData as category, idx}
 			<button
-				class={`flex-grow h-full btn ${currentCategoryIdx === idx ? 'bg-custom-selected text-white' : 'bg-custom-secondary'} text-black p-0 hover:bg-white rounded-lg font-semibold`}
+				class={`flex-grow h-full btn text-xl ${currentCategoryIdx === idx ? 'bg-custom-selected text-white' : 'bg-custom-secondary'} text-black p-0 hover:bg-white rounded-lg font-semibold`}
 				on:click={() => {
 					currentCategoryIdx = idx;
 					currentSubCategoryIdx = 0;
 					searchKeyword = '';
 					filterKeyword = '';
-				}}>{category.name}</button
+					console.log(category.list[0][0]);
+					selectedType.setSelectedType(category.list[0][1]);
+				}}
 			>
+				{category.name}
+			</button>
 		{/each}
 	</figure>
 	<details class="dropdown bg-custom-secondary rounded-xl">
-		<summary tabindex="0" role="button" class="btn bg-transparent w-full hover:bg-white text-black">
+		<summary
+			tabindex="0"
+			role="button"
+			class="btn bg-transparent w-full hover:bg-white text-black text-xl border-0"
+		>
 			{toolData[currentCategoryIdx].list[currentSubCategoryIdx][0]}
 		</summary>
 		<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
@@ -60,6 +68,8 @@
 						currentSubCategoryIdx = idx;
 						searchKeyword = '';
 						filterKeyword = '';
+						console.log(subCategory[1])
+						selectedType.setSelectedType(subCategory[1]);
 					}}>{subCategory[0]}</button
 				>
 			{/each}
@@ -80,12 +90,12 @@
 						on:click={() => {
 							console.log(item);
 							dodo.setCharacter(item);
-							selectedItem.setSelectedItem(item);
+							selectedType.setSelectedType(item.type);
 						}}
 					>
 						<img
 							src={`https://maplestory.io/api/KMS/389/item/${item.id}/icon`}
-							alt={item.id}
+							alt={'null'}
 							style="width: 32px"
 						/>
 						<p class="text-sm text-black w-full">{item.name}</p>
