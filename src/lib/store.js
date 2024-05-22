@@ -48,15 +48,15 @@ function createCharacter() {
 		//뷰티
 		Hair: ['68090', '허쉬 헤어', '0'],
 		Face: ['50137', '차차 얼굴', '0'],
-		Head: ['12016', '홍조 꽃잎 피부'],
+		Head: ['null', '홍조 꽃잎 피부'],
 		Body: ['2016', 'null'],
 		//장비
 		Hat: ['null', 'null'],
 		Overall: ['null', 'null'],
-		Cash: ['1702565', 'null'],
+		Cash: ['null', 'null'],
 		Top: ['1040036', '상의 이너'],
 		Bottom: ['1060026', '하의 이너'],
-		Cape: ['1103126', 'null'],
+		Cape: ['null', 'null'],
 		Glove: ['null', 'null'],
 		Shoes: ['null', 'null'],
 		Shield: ['null', 'null'],

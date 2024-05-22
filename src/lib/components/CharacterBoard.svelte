@@ -2,6 +2,10 @@
 	import { onMount } from 'svelte';
 	import { dodo, currentBackground, isImageLoading } from '$lib/store';
 	import drummingBunny from '$lib/assets/drummingBunny.gif';
+
+	onMount(() => {
+		dodo.setCharacter({ id: '12016', name: '홍조 꽃잎 피부', type: 'Head' });
+	});
 </script>
 
 <figure
@@ -27,6 +31,6 @@
 		}}
 	/>
 	{#if $isImageLoading}
-		<img src={drummingBunny} alt="북치는 토끼" class="absolute scale-150"/>
+		<img src={drummingBunny} alt="북치는 토끼" class="absolute scale-150" />
 	{/if}
 </figure>
