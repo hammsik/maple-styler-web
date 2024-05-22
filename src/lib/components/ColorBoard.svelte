@@ -33,7 +33,7 @@
 							dodo.setBeauty(color[1], 'Hair')
 						} else {
 							currentBeautyColor.updateColor(color[1], 1);
-							dodo.setBeauty(color[1], 'Lens')
+							dodo.setBeauty(color[1], 'Face')
 						}
 					}}
 				>
