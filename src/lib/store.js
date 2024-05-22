@@ -1,6 +1,17 @@
 // @ts-nocheck
 import { writable } from 'svelte/store';
 
+function storeImageLoading() {
+	const { subscribe, set, update } = writable(true);
+	return {
+		subscribe,
+		setIsLoading: (bool) => {
+			set(bool);
+			console.log('로딩시작');
+		}
+	};
+}
+
 function currentBackgrond() {
 	const { subscribe, set, update } = writable('null');
 	return {
@@ -154,3 +165,4 @@ export const dodo = createCharacter();
 export const selectedType = createSelectedType();
 export const currentBackground = currentBackgrond();
 export const currentBeautyColor = currentColor();
+export const isImageLoading = storeImageLoading();

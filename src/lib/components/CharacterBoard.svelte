@@ -1,6 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
-	import { dodo, currentBackground } from '$lib/store';
+	import { dodo, currentBackground, isImageLoading } from '$lib/store';
+	import drummingBunny from '$lib/assets/drummingBunny.gif';
 </script>
 
 <figure
@@ -15,5 +16,17 @@
 			/>
 		{/if}
 	</div>
-	<img src={dodo.getCharacter($dodo)} alt="캐릭터" class="scale-150" />
+	<img
+		src={dodo.getCharacter($dodo)}
+		loading="lazy"
+		alt="캐릭터"
+		class={`scale-150 ${$isImageLoading && 'opacity-0'}`}
+		on:load={() => {
+			isImageLoading.setIsLoading(false);
+			console.log('loaded');
+		}}
+	/>
+	{#if $isImageLoading}
+		<img src={drummingBunny} alt="북치는 토끼" class="absolute scale-150"/>
+	{/if}
 </figure>

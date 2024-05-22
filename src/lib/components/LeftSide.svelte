@@ -1,8 +1,9 @@
 <script>
 	import { getItemList } from '$lib/api';
 	import { toolData } from '$lib/data';
-	import { dodo, selectedType } from '$lib/store';
+	import { dodo, selectedType, isImageLoading } from '$lib/store';
 	import arrow from '$lib/assets/arrow.svg';
+	import orangeMushroom from '$lib/assets/orangeMushroom.gif';
 
 	let itemList = getItemList().then((res) => {
 		return res;
@@ -56,7 +57,9 @@
 		<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 		<div tabindex="0" class="btn bg-transparent w-full hover:bg-white text-black text-xl border-0">
 			<div class="w-full flex items-center gap-2">
-				<p class="text-left text-xl text-bold">{toolData[currentCategoryIdx].list[currentSubCategoryIdx][0]}</p>
+				<p class="text-left text-xl text-bold">
+					{toolData[currentCategoryIdx].list[currentSubCategoryIdx][0]}
+				</p>
 				<img src={arrow} alt="arrow" class="w-8 h-8" />
 			</div>
 		</div>
@@ -80,7 +83,10 @@
 		class="w-full h-[540px] grid grid-cols-2 bg-custom-secondary rounded-xl gap-4 overflow-y-auto p-2"
 	>
 		{#await itemList}
-			<p>로딩중</p>
+			<section class="m-auto col-span-2">
+				<img src={orangeMushroom} alt="주황버섯" class="m-auto scale-150" />
+				<p class="m-auto mt-8 text-black font-normal">아이템 데이터 로딩중...</p>
+			</section>
 		{:then loadedList}
 			{#each loadedList[currentCategoryIdx].list[currentSubCategoryIdx].list as item, idx}
 				{#if filterKeyword === '' || !item.name || item.name.includes(filterKeyword)}
@@ -91,6 +97,7 @@
 						on:click={() => {
 							console.log(item);
 							dodo.setCharacter(item);
+							isImageLoading.setIsLoading(true);
 							selectedType.setSelectedType(item.type);
 						}}
 					>
@@ -98,6 +105,7 @@
 							src={`https://maplestory.io/api/KMS/389/item/${item.id}/icon`}
 							alt={'null'}
 							style="width: 32px"
+							loading="lazy"
 						/>
 						<p class="text-sm text-black w-full">{item.name}</p>
 					</div>

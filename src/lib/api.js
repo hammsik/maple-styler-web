@@ -55,6 +55,7 @@ export async function getItemList() {
 				);
 			}
 		}
+		console.log(`fetching ${category[i]} list completed:`);
 		itemList.push({ name: category[i], list: categoryList });
 	}
 	console.log('fetching item list completed:');
