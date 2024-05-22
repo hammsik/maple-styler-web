@@ -33,6 +33,7 @@ function createSelectedType() {
 
 function createCharacter() {
 	const { subscribe, set, update } = writable({
+		image: '',
 		// itemMap: {
 		//뷰티
 		Hair: ['68090', '허쉬 헤어', '0'],
@@ -60,12 +61,26 @@ function createCharacter() {
 
 	return {
 		subscribe,
-		getCharacter: (itemMap) => {
-			const itemsUrl = makeItemsUrl(itemMap);
-			console.log(itemsUrl);
-			return `https://maplestory.io/api/Character/${itemsUrl}/stand1/0/?renderMode=2`;
+		getCharacter: async (character) => {
+			console.log('로딩 시작');
+			update((itemMap) => {
+				itemMap.image = 'ㄷㄷ';
+				return itemMap;
+			});
+			const itemsUrl = makeItemsUrl(character);
+			const response = await fetch(
+				`https://maplestory.io/api/Character/${itemsUrl}/stand1/0/?renderMode=2`
+			);
+			console.log('로딩 끝', response.url);
+			update((itemMap) => {
+				itemMap.image = response.url;
+				return itemMap;
+			});
+			// console.log(itemsUrl);
+			// return `https://maplestory.io/api/Character/${itemsUrl}/stand1/0/?renderMode=2`;
 		},
-		setCharacter: (item) =>
+		setCharacter: (item) => {
+			console.log(item);
 			update((itemMap) => {
 				if (item.id === 'null') {
 					if (item.type === 'Top') {
@@ -87,15 +102,19 @@ function createCharacter() {
 				}
 
 				return itemMap;
-			}),
+			});
+		},
 		setBeauty: (color, type) =>
 			update((itemMap) => {
+				console.log(color, type);
 				itemMap[type][2] = color;
 				if (type === 'Hair') {
 					const item = itemMap['Hair'][0];
+					console.log(item);
 					itemMap['Hair'][0] = item.substring(0, 4) + color + item.substring(5);
 				} else {
 					const item = itemMap['Face'][0];
+					console.log(item);
 					itemMap['Face'][0] = item.substring(0, 2) + color + item.substring(3);
 				}
 				return itemMap;

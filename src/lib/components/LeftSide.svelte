@@ -89,8 +89,8 @@
 					<div
 						class="h-16 bg-custom-tertiary rounded-md flex justify-center items-center p-2 gap-2 hover:opacity-70 hover:scale-95 cursor-pointer"
 						on:click={() => {
-							console.log(item);
-							dodo.setCharacter(item);
+							dodo.setCharacter(item)
+							dodo.getCharacter($dodo)
 							selectedType.setSelectedType(item.type);
 						}}
 					>

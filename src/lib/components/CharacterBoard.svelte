@@ -1,6 +1,10 @@
 <script>
 	import { onMount } from 'svelte';
 	import { dodo, currentBackground } from '$lib/store';
+
+	onMount(() => {
+		dodo.getCharacter($dodo);
+	});
 </script>
 
 <figure
@@ -15,5 +19,5 @@
 			/>
 		{/if}
 	</div>
-	<img src={dodo.getCharacter($dodo)} alt="캐릭터" class="scale-150" />
+	<img src={$dodo.image} alt="캐릭터" class="scale-150" />
 </figure>
