@@ -63,10 +63,10 @@ function createCharacter() {
 		//악세
 		'Face Accessory': ['null', 'null'],
 		'Eye Decoration': ['null', 'null'],
-		Earrings: ['null', 'null']
+		Earrings: ['null', 'null'],
 
-		// itemQueue: [],
-		// itemQueueIndex: 0
+		itemQueue: [],
+		itemQueueIndex: 0
 	});
 
 	return {
@@ -78,7 +78,13 @@ function createCharacter() {
 		},
 		setCharacter: (item) =>
 			update((itemMap) => {
-				if (item.id === 'null') {
+				const itemId = item.id.toString();
+				if (itemId === itemMap[item.type][0]) {
+					return itemMap;
+				}
+
+				//벗기기
+				if (itemId === 'null') {
 					if (item.type === 'Top') {
 						itemMap['Top'] = ['1040036', '상의 이너'];
 					} else if (item.type === 'Bottom') {
@@ -89,12 +95,12 @@ function createCharacter() {
 				} else if (item.type === 'Overall') {
 					itemMap['Top'] = ['1040036', '상의 이너'];
 					itemMap['Bottom'] = ['1060026', '하의 이너'];
-					itemMap[item.type] = [item.id, item.name];
+					itemMap[item.type] = [itemId, item.name];
 				} else if (item.type === 'Top' || item.type === 'Bottom') {
 					itemMap['Overall'] = ['null', 'null'];
-					itemMap[item.type] = [item.id, item.name];
+					itemMap[item.type] = [itemId, item.name];
 				} else {
-					itemMap[item.type] = [item.id, item.name];
+					itemMap[item.type] = [itemId, item.name];
 				}
 
 				return itemMap;

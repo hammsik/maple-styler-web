@@ -2,7 +2,7 @@
 	// @ts-nocheck
 
 	import { hairColor, lensColor } from '$lib/data';
-	import { currentBeautyColor, dodo } from '$lib/store';
+	import { currentBeautyColor, dodo, isImageLoading} from '$lib/store';
 
 	let currentColorType = 'hair';
 </script>
@@ -28,6 +28,7 @@
 					class={`relative w-7 h-7 rounded-md flex justify-center items-center cursor-pointer hover:bg-white hover:bg-opacity-10`}
 					style={`background-color: ${color[0]}`}
 					on:click={() => {
+						isImageLoading.setIsLoading(true);
 						if (currentColorType === 'hair') {
 							currentBeautyColor.updateColor(color[1], 0);
 							dodo.setBeauty(color[1], 'Hair')

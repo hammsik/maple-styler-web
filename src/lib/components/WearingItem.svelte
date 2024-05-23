@@ -2,7 +2,7 @@
 // @ts-nocheck
 
 	import heart from '$lib/assets/heart.svg';
-	import {dodo, selectedType } from '$lib/store';
+	import {dodo, isImageLoading, selectedType } from '$lib/store';
 	import { enToKo } from '$lib/data';
 </script>
 
@@ -28,6 +28,7 @@
         class="flex-grow btn bg-custom-secondary text-black hover:bg-white rounded-lg text-base disabled:invisible"
         on:click={() => {
         dodo.setCharacter({ id: 'null', name: 'null', type: $selectedType });
+		isImageLoading.setIsLoading(true);
         }}
 			>장착 해제</button
 		>
