@@ -31,6 +31,6 @@
 		}}
 	/>
 	{#if $isImageLoading}
-		<img src={drummingBunny} alt="북치는 토끼" class="absolute scale-150" />
+		<img src={drummingBunny} alt="북치는 토끼" class="absolute bottom-[185px] scale-150" />
 	{/if}
 </figure>
