@@ -14,10 +14,19 @@
 	export let data;
 	let { supabase, session } = data;
 	$: ({ supabase, session } = data);
+	console.log(supabase);
+	console.log(session);
+
+	$: if (session) {
+		window.location.href = '/home';
+	} else {
+		window.location.href = '/login';
+	
+	}
 
 	async function signUpNewUser() {
 		const { data, error } = await supabase.auth.signUp({
-			email: 'example@email.com',
+			email: 'example@email.eom',
 			password: 'example-password',
 			options: {
 				emailRedirectTo: 'https://example.com/welcome'
@@ -25,7 +34,3 @@
 		});
 	}
 </script>
-
-<div class="container w-96 h-96 border-blue-50 border-2 flex justify-center items-center">
-	<button class="btn btn-lg" on:click={() => signUpNewUser()}>회원가입</button>
-</div>
