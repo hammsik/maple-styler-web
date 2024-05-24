@@ -12,7 +12,6 @@
 
 	// @ts-ignore
 	async function login(email, password) {
-		console.log('email: ', email, '\npassword: ', password);
 		if (email === '' || password === '') {
 			Swal.fire({
 				icon: 'error',

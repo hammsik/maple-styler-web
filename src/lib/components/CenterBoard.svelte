@@ -1,4 +1,6 @@
 <script>
+// @ts-nocheck
+
 	import CharacterBoard from './CharacterBoard.svelte';
 	import ColorBoard from './ColorBoard.svelte';
 	import WearingItem from './WearingItem.svelte';
