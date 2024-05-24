@@ -5,7 +5,7 @@
 	import RightSide from '$lib/components/RightSide.svelte';
 </script>
 
-<div class="w-full h-full max-w-[1480px] max-h-[868px] flex flex-col text-white p-4">
+<div class="w-full h-full max-w-[1480px] max-h-[868px] flex flex-col justify-center items-center text-white p-4">
 	<Header />
 	<main class="w-full h-full flex gap-5 py-3">
 		<LeftSide />
