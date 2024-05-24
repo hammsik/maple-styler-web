@@ -1,6 +1,30 @@
 // @ts-nocheck
 import { writable } from 'svelte/store';
 
+function storeSession() {
+	const { subscribe, set } = writable(null);
+	return {
+		subscribe,
+		setSession: (session) => {
+			console.log('세션 설정');
+			console.log(session);
+			set(session);
+		}
+	};
+}
+
+function storeSupabase() {
+	const { subscribe, set } = writable(null);
+	return {
+		subscribe,
+		setSupabase: (supabase) => {
+			console.log('슈파베이스 설정');
+			console.log(supabase);
+			set(supabase);
+		}
+	};
+}
+
 function storeImageLoading() {
 	const { subscribe, set } = writable(true);
 	return {
@@ -78,7 +102,10 @@ function createCharacter() {
 		},
 		setCharacter: (item) =>
 			update((itemMap) => {
-				const itemId = item.id.toString();
+				let itemId = item.id;
+				if (typeof(item.id) === 'number') {
+					itemId = item.id.toString();
+				}
 				if (itemId === itemMap[item.type][0]) {
 					return itemMap;
 				}
@@ -172,3 +199,5 @@ export const selectedType = createSelectedType();
 export const currentBackground = currentBackgrond();
 export const currentBeautyColor = currentColor();
 export const isImageLoading = storeImageLoading();
+export const sessionTmp = storeSession();
+export const supabaseTmp = storeSupabase();
