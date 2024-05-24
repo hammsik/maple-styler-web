@@ -1,26 +1,74 @@
 <script>
 	// @ts-nocheck
-	import { supabase } from '$lib/supabase';
+	import Swal from 'sweetalert2';
 
 	let email = '';
 	let password = '';
 	let passwordConfirm = '';
 
-	// function signup(email, password, passwordConfirm) {
-	// }
+	export let data;
+	let { supabase, session } = data;
+	$: ({ supabase, session } = data);
+	console.log(supabase);
+	console.log(session);
+
+	// 회원가입 정규표현식
+	const usernamePattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+	const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+
+
 	async function signup(email, password, passwordConfirm) {
 		console.log('email: ', email, '\npassword: ', password, '\npasswordConfirm: ', passwordConfirm);
 		if (password !== passwordConfirm) {
-			console.log('비밀번호가 일치하지 않습니다.');
-			return;
+			Swal.fire({
+				icon: 'error',
+				title: '비밀번호가 일치하지 않습니다',
+				showConfirmButton: false,
+				timer: 1000
+			});
+		} else if (usernamePattern.test(email) === false) {
+			Swal.fire({
+				icon: 'error',
+				title: '이메일 형식을 확인해주세요',
+				showConfirmButton: false,
+				timer: 1000
+			});
+		} else if (passwordPattern.test(password) === false) {
+			Swal.fire({
+				icon: 'error',
+				title: '비밀번호 형식을 확인해주세요',
+				showConfirmButton: false,
+				timer: 1500
+			});
+		} else {
+			const { data, error } = await supabase.auth.signUp({
+				email: email,
+				password: password
+				// options: {
+				// 	emailRedirectTo: 'https://example.com/welcome'
+				// }
+			});
+
+			if (error) {
+				Swal.fire({
+					icon: 'error',
+					title: '회원가입에 실패했습니다',
+					showConfirmButton: false,
+					timer: 1500
+				});
+				console.log(error);
+			} else {
+				Swal.fire({
+					icon: 'success',
+					title: '회원가입이 완료되었습니다.',
+					showConfirmButton: false,
+					timer: 1500
+				});
+				setTimeout(() => {
+					window.location.href = '/login';
+				}, 1500);
+			}
 		}
-		const { data, error } = await supabase.auth.signUp({
-			email: email,
-			password: password,
-			// options: {
-			// 	emailRedirectTo: 'https://example.com/welcome'
-			// }
-		});
 	}
 </script>
 
@@ -28,7 +76,7 @@
 	<h2 class="text-3xl font-semibold text-custom-primary">Sign up</h2>
 	<form class="flex flex-col">
 		<div class="w-full flex justify-between">
-			<p class="mb-1 text-custom-primary">아이디</p>
+			<p class="mb-1 text-custom-primary">이메일</p>
 			<!-- <button class="text-custom-primary mr-1 mb-1 hover:scale-95">중복확인</button> -->
 		</div>
 		<label class="input input-bordered flex items-center gap-2 mb-10 bg-[#dadada]">
@@ -41,7 +89,7 @@
 					d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z"
 				/></svg
 			>
-			<input type="text" class="grow text-black" placeholder="영문 6자 이상" bind:value={email} />
+			<input type="text" class="grow text-black" placeholder="example@email.com" bind:value={email} />
 		</label>
 		<p class="mb-1 text-custom-primary">비밀번호</p>
 		<label class="input input-bordered flex items-center gap-2 mb-4 bg-[#dadada]">

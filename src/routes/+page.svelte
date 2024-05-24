@@ -23,14 +23,5 @@
 		window.location.href = '/login';
 	
 	}
-
-	async function signUpNewUser() {
-		const { data, error } = await supabase.auth.signUp({
-			email: 'example@email.eom',
-			password: 'example-password',
-			options: {
-				emailRedirectTo: 'https://example.com/welcome'
-			}
-		});
-	}
+	
 </script>
