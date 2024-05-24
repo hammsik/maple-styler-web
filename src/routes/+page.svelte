@@ -1,15 +1,23 @@
 <script>
-	import Header from '$lib/components/Header.svelte';
-	import LeftSide from '$lib/components/LeftSide.svelte';
-	import CenterBoard from '$lib/components/CenterBoard.svelte';
-	import RightSide from '$lib/components/RightSide.svelte';
+	import { onMount } from 'svelte';
+	import { createClient } from '@supabase/supabase-js';
+
+	// onMount(() => {
+	// 	auth.onAuthStateChanged((user) => {
+	// 		if (!user) {
+	// 			window.location.href = '/login';
+	// 		} else {
+	//             window.location.href = '/home';
+	//         }
+	// 	});
+	// });
+	export let data;
+
+
 </script>
 
-<div class="w-full h-full max-w-[1480px] max-h-[868px] flex flex-col justify-center items-center text-white p-4">
-	<Header />
-	<main class="w-full h-full flex gap-5 py-3">
-		<LeftSide />
-		<CenterBoard />
-		<RightSide />
-	</main>
-</div>
+<ul>
+	{#each data.users as user}
+		<li on:click={() => console.log(user)}>{user}</li>
+	{/each}
+</ul>
