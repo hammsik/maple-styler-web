@@ -2,7 +2,7 @@
 import { writable } from 'svelte/store';
 
 function storeImageLoading() {
-	const { subscribe, set, update } = writable(true);
+	const { subscribe, set } = writable(true);
 	return {
 		subscribe,
 		setIsLoading: (bool) => {
@@ -13,7 +13,7 @@ function storeImageLoading() {
 }
 
 function currentBackgrond() {
-	const { subscribe, set, update } = writable('null');
+	const { subscribe, set } = writable('null');
 	return {
 		subscribe,
 		setBackground: (item) => set(item)
@@ -21,7 +21,7 @@ function currentBackgrond() {
 }
 
 function currentColor() {
-	const { subscribe, set, update } = writable([0, 0]);
+	const { subscribe, update } = writable([0, 0]);
 	return {
 		subscribe,
 		updateColor: (colorInput, idx) => {
@@ -35,7 +35,7 @@ function currentColor() {
 }
 
 function createSelectedType() {
-	const { subscribe, set, update } = writable('Hair');
+	const { subscribe, set } = writable('Hair');
 	return {
 		subscribe,
 		setSelectedType: (item) => set(item)
@@ -43,7 +43,7 @@ function createSelectedType() {
 }
 
 function createCharacter() {
-	const { subscribe, set, update } = writable({
+	const { subscribe, update } = writable({
 		// itemMap: {
 		//뷰티
 		Hair: ['68090', '허쉬 헤어', '0'],
